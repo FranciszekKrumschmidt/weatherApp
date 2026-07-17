@@ -1,4 +1,5 @@
 import express from 'express';
+import { weather } from './weather';
 
 import MessageResponse from '../interfaces/MessageResponse';
 import emojis from './emojis';
@@ -12,5 +13,6 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 });
 
 router.use('/emojis', emojis);
+router.use('/weather', weather);
 
 export default router;
