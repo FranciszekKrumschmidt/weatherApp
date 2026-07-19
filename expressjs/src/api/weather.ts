@@ -72,8 +72,8 @@ router.get('/forecast-weather', async (req: Request, res: Response) => {
     const API_KEY = process.env.WEATHER_API_KEY
     try {
         const [gliwiceRes, hamburgRes] = await Promise.all([
-            fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Gliwice`),
-            fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Hamburg`),
+            fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Gliwice&days=14`),
+            fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Hamburg&days=14`),
         ])
 
         if (!gliwiceRes.ok || !hamburgRes.ok) {
