@@ -1,16 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function Weather() {
-    const [weatherDescriptionGliwice, setWeatherDescriptionGliwice] = useState("Sunny");
-    const [temperatureGliwice, setTemperatureGliwice] = useState("27°C");
-    const [feelsLikeGliwice, setFeelsLikeGliwice] = useState("27°C");
-    const [weatherDescriptionHamburg, setWeatherDescriptionHamburg] = useState("Sunny");
-    const [temperatureHamburg, setTemperatureHamburg] = useState("27°C");
-    const [feelsLikeHamburg, setFeelsLikeHamburg] = useState("27°C");
+    const [weatherDescriptionGliwice, setWeatherDescriptionGliwice] = useState("--");
+    const [temperatureGliwice, setTemperatureGliwice] = useState("--");
+    const [feelsLikeGliwice, setFeelsLikeGliwice] = useState("--");
+    const [weatherDescriptionHamburg, setWeatherDescriptionHamburg] = useState("--");
+    const [temperatureHamburg, setTemperatureHamburg] = useState("--");
+    const [feelsLikeHamburg, setFeelsLikeHamburg] = useState("--");
     
+
+    useEffect(() => {
+      const getWeatherData = async () => {
+          try {
+            // Fetch data from expressjs backend
+            const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const response = await fetch(`${baseURL}/api/v1/weather/realtime-weather`);
+
+            if (!response.ok) {
+              throw new Error('Network response not ok');
+            }
+
+            const data = await response.json();
+
+            setWeatherDescriptionGliwice(data.gliwice.description);
+            setTemperatureGliwice(data.gliwice.temperature);
+            setFeelsLikeGliwice(data.gliwice.feelslike);
+
+            setWeatherDescriptionHamburg(data.hamburg.description);
+            setTemperatureHamburg(data.hamburg.temperature);
+            setFeelsLikeHamburg(data.hamburg.feelslike);
+          } catch(error) {
+            console.error("error fetching weather data: ",error);
+          }
+      };
+      getWeatherData();
+    }, [])
+
+
+
+
     return (
-
-
         <div className="flex justify-center flex-col gap-4 items-center">
       <div>
         Simple Weather Application
