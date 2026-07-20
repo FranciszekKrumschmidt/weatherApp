@@ -23,7 +23,7 @@ export function Weather() {
           try {
             // Fetch data from expressjs backend for weather right now
             const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-            const response = await fetch(`${baseURL}/api/v1/weather/realtime-weather`);
+            const response = await fetch(`${baseURL}/api/v1/realtime-weather`);
 
             if (!response.ok) {
               throw new Error('Network response not ok');
@@ -45,10 +45,14 @@ export function Weather() {
       getWeatherData();
     }, [])
     const showForecast = async () => {
+      if (!selectedDate) {
+        setForecastMessage("Please select a date first");
+        return;
+      }
       try {
         // Fetch data from expressjs backend for weather forecast for the next 14 days
         const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        const response = await fetch(`${baseURL}/api/v1/weather/forecast-weather`);
+        const response = await fetch(`${baseURL}/api/v1/forecast-weather?date=${selectedDate}`);
 
         if (!response.ok) {
           throw new Error('Network response not ok');
@@ -57,17 +61,17 @@ export function Weather() {
         const data = await response.json();
 
         // select a day for which to show the forecast (for a date selected in date selector)
-        const targetDayGliwice = data.gliwice.forecast.find((day: any) => day.date === selectedDate);
-        const targetDayHamburg = data.hamburg.forecast.find((day: any) => day.date === selectedDate);
+        // const targetDayGliwice = data.gliwice.forecast.find((day: any) => day.date === selectedDate);
+        // const targetDayHamburg = data.hamburg.forecast.find((day: any) => day.date === selectedDate);
 
-        if (targetDayGliwice && targetDayHamburg){
-          setForecastGliwice(targetDayGliwice);
-          setForecastHamburg(targetDayHamburg);
+        if (data.gliwice && data.hamburg){
+          setForecastGliwice(data.gliwice);
+          setForecastHamburg(data.hamburg);
           setForecastMessage(`Showing forecast for: ${selectedDate}`);
         }
         else {
-          setForecastGliwice(targetDayGliwice);
-          setForecastHamburg(targetDayHamburg);
+          setForecastGliwice(null);
+          setForecastHamburg(null);
           setForecastMessage(`No forecast avalible for ${selectedDate}`);
         }
       } catch(error) {
