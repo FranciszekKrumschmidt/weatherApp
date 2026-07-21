@@ -4,6 +4,9 @@ A full-stack web application that provides real-time weather and 14-day forecast
 
 The application features a custom backend with an intelligent caching system. It uses a local SQLite database to store historical data and recent forecasts, minimizing external API calls and improving response times.
 
+Based on a template from nubisoft:
+https://github.com/nubisoft/nubiweather-recruitment
+
 ## Tech Stack
 
 | Part | Technologies |
