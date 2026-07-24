@@ -36,6 +36,8 @@ const getNext7Days = (startDate: string) => {
     return dates;
 };
 
+const port = import.meta.env.VITE_API_PORT || "5000"
+const baseURL = `http://localhost:${port}`;
 export function useWeather() {
     const [gliwiceNow, setGliwiceNow] = useState<WeatherNow | null>(null);
     const [hamburgNow, setHamburgNow] = useState<WeatherNow | null>(null);
@@ -45,11 +47,9 @@ export function useWeather() {
     
     const [isLoading, setIsLoading] = useState(false);
     const [forecastMessage, setForecastMessage] = useState("");
-
+    
     const [forecastsGliwice, setForecastsGliwice] = useState<ForecastDay[]>([]);
     const [forecastsHamburg, setForecastsHamburg] = useState<ForecastDay[]>([]);
-    const port = import.meta.env.VITE_API_PORT || "5000"
-    const baseURL = `http://localhost:${port}`;
     const fetchForecastData = async (startDate: string) => {
         setIsLoading(true);
         setForecastMessage("Loading 7-day forecast...");
