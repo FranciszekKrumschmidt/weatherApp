@@ -1,10 +1,36 @@
-# Express API Starter with Typescript
+This backend is built using Express.js and TypeScript. It fetches data from [WeatherAPI.com](https://www.weatherapi.com/) and features SQLite caching system to minimize external API calls and speed up response times.
 
-How to use this template:
+## Backend includes 2 endpoints:
 
-```sh
-npx create-express-api --typescript --directory my-api-name
+### 1. Realtime Weather
+* **URL:** `/api/v1/realtime-weather`
+* **Method:** `GET`
+* **Description:** Returns the current weather conditions for Gliwice and Hamburg. Includes actual temperature, "feels like" temperature, and a weather condition description.
+* **Source:** `src/api/realtime-weather.ts`
+
+### 2. Weather Forecast
+* **URL:** `/api/v1/forecast-weather`
+* **Method:** `GET`
+* **Query Parameters:** `?date=YYYY-MM-DD` (Required)
+* **Example:** `/api/v1/forecast-weather?date=2026-07-24`
+* **Description:** Returns the weather forecast (average temperature and condition description) for the specific day provided in the query string.
+* **Source:** `src/api/forecast-weather.ts`
+
+## Environment Variables (in .env file)
+
+to run this backend locally, you must create a `.env` file in this directory (the `backend` folder) or copy and rename .env_sample to .env and enter the following keys:
+
+```env
+NODE_ENV=development
+PORT=5000
+WEATHER_API_KEY=your_weatherapi_key_here
 ```
+
+## Database (Caching)
+
+This project uses SQLite to cache responses. 
+You do not need to set up a database server. Upon running the backend for the first time, a local `weather_app.db` file will be automatically generated and configured with the required tables.
+
 
 Includes API Server utilities:
 
