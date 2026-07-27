@@ -83,3 +83,27 @@ npm run test
 ```
 npm run dev
 ```
+
+## troubleshooting
+on newer npm verions allowScripts may block insatlling some of the dependencies.
+if npm install returns 
+'''sh
+npm warn install-scripts 3 packages had install scripts blocked because they are not covered by allowScripts:
+...
+''' 
+and npm run dev returns
+'''sh
+<folder name>/weatherApp/node_modules/bindings/bindings.js:126
+  err = new Error(
+        ^
+Error: Could not locate the bindings file. Tried:
+ → <folder name>/weatherApp/node_modules/sqlite3/build/node_sqlite3.node
+'''
+
+try:
+'''sh
+npm install-scripts approve sqlite3
+npm install-scripts approve esbuild
+npm install-scripts approve unrs-resolver
+npm rebuild
+'''
