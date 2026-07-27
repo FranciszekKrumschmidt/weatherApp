@@ -82,7 +82,7 @@ router.get('/', async (req: Request, res: Response) => {
                     const condition = targetDay.day.condition.text;
 
                     await db.run(
-                        `INSERT OR REPLACE INTO weather_forecasts (city, forecast_date, description, average_temp, last_updated)
+                        `INSERT OR REPLACE INTO weather_forecast (city, forecast_date, description, average_temp, last_updated)
                          VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
                         [city, target_date, condition, temp]
                     );
