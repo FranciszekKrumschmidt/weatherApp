@@ -15,5 +15,5 @@ const startServer = async () => {
   } catch (error) {
     console.error("Couldn't start database", error);
   }
-}
+};
 startServer();

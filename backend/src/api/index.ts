@@ -14,7 +14,7 @@ router.get<{}, MessageResponse>('/', (req, res) => {
 });
 
 // router.use('/weather', weather);
-router.use('/realtime-weather',realtimeWeatherRouter)
-router.use('/forecast-weather',forecastWeatherRouter)
+router.use('/realtime-weather', realtimeWeatherRouter);
+router.use('/forecast-weather', forecastWeatherRouter);
 
 export default router;
