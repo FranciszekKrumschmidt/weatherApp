@@ -2,6 +2,7 @@
 // helper function for loading data from backend to frontend
 //
 import { useState, useEffect } from 'react';
+// import { URLSearchParams } from 'node:url'
 
 export type WeatherNow = {
     description: string;
@@ -55,18 +56,19 @@ export function useWeather() {
         setForecastMessage("Loading 7-day forecast...");
         
         try {
-
             const datesToFetch = getNext7Days(startDate);
-            const results = [];
-
-            for (const date of datesToFetch) {
-                const response = await fetch(`${baseURL}/api/v1/forecast-weather?date=${date}`);
+            const fetchPromises = datesToFetch.map(async (date) => {
+                const params = new URLSearchParams({'date': date});
+                const response = await fetch(`${baseURL}/api/v1/forecast-weather?${params.toString()}`);
                 if (response.ok) {
                     const data = await response.json();
-                    results.push({ date, data });
+                    return {date, data}
                 }
-            }
+                return {date, data:null};
+            })
 
+            const resultsToCheck = await Promise.all(fetchPromises);
+            const results = resultsToCheck.filter(r => r.data !== null);
             const gliwice7Days = results.map(r => r.data.gliwice ? { date: r.date, ...r.data.gliwice } : null);
             const hamburg7Days = results.map(r => r.data.hamburg ? { date: r.date, ...r.data.hamburg } : null);
 
