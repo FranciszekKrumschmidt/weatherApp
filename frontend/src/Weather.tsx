@@ -44,7 +44,7 @@ export function Weather() {
                             <p className="text-sm text-slate-400 mt-2">Feels like: {gliwiceNow?.feelslike || "--"}°C</p>
                         </div>
                         <div className="text-5xl font-black text-blue-600">
-                            {gliwiceNow?.temperature || "--"}°
+                            {gliwiceNow?.temperature || "--"}
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@ export function Weather() {
                             <p className="text-sm text-slate-400 mt-2">Feels like: {hamburgNow?.feelslike || "--"}°C</p>
                         </div>
                         <div className="text-5xl font-black text-blue-600">
-                            {hamburgNow?.temperature || "--"}°
+                            {hamburgNow?.temperature || "--"}
                         </div>
                     </div>
                 </div>

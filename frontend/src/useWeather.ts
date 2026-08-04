@@ -102,21 +102,34 @@ export function useWeather() {
     };
 
     useEffect(() => {
-        const fetchRealtime = async () => {
+        const cities = ['Gliwice', 'hamburg'];
+
+        const fetchRealtime = async (city:string) => {
             try {
-                const response = await fetch(`${baseURL}/api/v1/realtime-weather`);
+                const params = new URLSearchParams({ 'city': city });
+                const response = await fetch(`${baseURL}/api/v1/realtime-weather?${params.toString()}`);
                 if (!response.ok) throw new Error('Network response not ok');
                 
                 const data = await response.json();
-                setGliwiceNow(data.gliwice);
-                setHamburgNow(data.hamburg);
+                return (data);
             } catch(error) {
                 console.error("Error fetching realtime weather:", error);
+                return (null);
             }
         };
 
-        fetchRealtime();
-        fetchForecastData(getTodayString());
+        const loadAllWeather = async () => {
+            const [gliwiceData, hamburgData] = await Promise.all([
+                fetchRealtime(cities[0]),
+                fetchRealtime(cities[1])
+            ]);
+    
+            setGliwiceNow(gliwiceData);
+            setHamburgNow(hamburgData);
+            
+            fetchForecastData(getTodayString());
+        };
+        loadAllWeather();
         
     }, []);
 
