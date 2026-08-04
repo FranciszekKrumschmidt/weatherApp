@@ -8,45 +8,17 @@ router.get('/', async (req: Request, res: Response) => {
 
   const API_KEY = process.env.WEATHER_API_KEY;
   const targetDate = req.query.date as string;
+  const targetCity = req.query.city as string;
   if (!targetDate) {
     return res.status(400).json({ error:'Enter correct date' });
   }
   const db = getDB();
-  const cities = ['Gliwice', 'Hamburg'];
+  const cities = [targetCity];
   const responseData: any = {};
   const today = new Date().toISOString().split('T')[0];
   try {
-    // old method -> loading forecast from api for each endpoint use
-    // const [gliwiceRes, hamburgRes] = await Promise.all([
-    //     fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Gliwice&days=14`),
-    //     fetch(`${BASE_URL}/forecast.json?key=${API_KEY}&q=Hamburg&days=14`),
-    // ])
-
-    // if (!gliwiceRes.ok || !hamburgRes.ok) {
-    //     throw new Error('Falied to fetch data from WeatherAPI');
-    // }
-    // const gliwiceData: ForecastResponse = await gliwiceRes.json();
-    // const hamburgData: ForecastResponse = await hamburgRes.json();
-
-    // res.json({
-    //     gliwice: {
-    //         // Mapping over the array of days to get a clean list
-    //         forecast: gliwiceData.forecast.forecastday.map(day => ({
-    //             date: day.date,
-    //             temp: `${day.day.avgtemp_c}°C`,
-    //             condition: day.day.condition.text
-    //         }))
-    //     },
-    //     hamburg: {
-    //         forecast: hamburgData.forecast.forecastday.map(day => ({
-    //             date: day.date,
-    //             temp: `${day.day.avgtemp_c}°C`,
-    //             condition: day.day.condition.text
-    //         }))
-    //     }
-    // })
-
-    // new method -> check for up-to-date (from today) in a database, load form api if there is not
+    
+    // new method -> check for up-to-date (from today) in a database, load form api if there isn't
     for (const city of cities) {
       const row = await db.get(
         'SELECT * FROM weather_forecast WHERE city = ? AND forecast_date = ?',
