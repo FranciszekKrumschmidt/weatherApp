@@ -41,7 +41,7 @@ export function Weather() {
                         <div>
                             <h2 className="text-xl font-bold text-slate-700">Gliwice, PL</h2>
                             <p className="text-slate-500 capitalize">{gliwiceNow?.description || "--"}</p>
-                            <p className="text-sm text-slate-400 mt-2">Feels like: {gliwiceNow?.feelslike || "--"}°C</p>
+                            <p className="text-sm text-slate-400 mt-2">Feels like: {gliwiceNow?.feelslike || "--"}</p>
                         </div>
                         <div className="text-5xl font-black text-blue-600">
                             {gliwiceNow?.temperature || "--"}
@@ -52,7 +52,7 @@ export function Weather() {
                         <div>
                             <h2 className="text-xl font-bold text-slate-700">Hamburg, DE</h2>
                             <p className="text-slate-500 capitalize">{hamburgNow?.description || "--"}</p>
-                            <p className="text-sm text-slate-400 mt-2">Feels like: {hamburgNow?.feelslike || "--"}°C</p>
+                            <p className="text-sm text-slate-400 mt-2">Feels like: {hamburgNow?.feelslike || "--"}</p>
                         </div>
                         <div className="text-5xl font-black text-blue-600">
                             {hamburgNow?.temperature || "--"}
