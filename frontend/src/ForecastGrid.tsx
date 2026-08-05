@@ -9,7 +9,7 @@ type ForecastWeatherGridProps = {
     forecastsHamburg: (WeatherData | null)[];
 }
 
-const getWeatherIcon = (condition: string) => {
+export const getWeatherIcon = (condition: string) => {
     const lowerCondition = condition.toLowerCase();
     if (lowerCondition.includes('sun') || lowerCondition.includes('clear')) return '☀️';
     if (lowerCondition.includes('rain') || lowerCondition.includes('drizzle')) return '🌧️';
